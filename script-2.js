@@ -87,27 +87,27 @@
       card.appendChild(overlay);
     });
 
-    /* ── Inject email input into contact form ───────────────── */
-    (function injectEmailField() {
-      const form = document.getElementById('contactForm');
-      const phoneInput = document.getElementById('phoneInput');
-      if (!form || !phoneInput) return;
-      const emailInp = document.createElement('input');
-      emailInp.className = 'form-input';
-      emailInp.type = 'email';
-      emailInp.id = 'emailInput';
-      emailInp.placeholder = 'Your Email';
-      emailInp.required = true;
-      form.insertBefore(emailInp, phoneInput);
-      /* error spans */
-      ['nameInput','emailInput','phoneInput'].forEach(id => {
-        const inp = document.getElementById(id);
-        const span = document.createElement('span');
-        span.className = 'field-error-msg';
-        span.id = id + 'Err';
-        inp.parentNode.insertBefore(span, inp.nextSibling);
-      });
-    })();
+    // /* ── Inject email input into contact form ───────────────── */
+    // (function injectEmailField() {
+    //   const form = document.getElementById('contactForm');
+    //   const phoneInput = document.getElementById('phoneInput');
+    //   if (!form || !phoneInput) return;
+    //   const emailInp = document.createElement('input');
+    //   emailInp.className = 'form-input';
+    //   emailInp.type = 'email';
+    //   emailInp.id = 'emailInput';
+    //   emailInp.placeholder = 'Your Email';
+    //   emailInp.required = true;
+    //   form.insertBefore(emailInp, phoneInput);
+    //   /* error spans */
+    //   ['nameInput','emailInput','phoneInput'].forEach(id => {
+    //     const inp = document.getElementById(id);
+    //     const span = document.createElement('span');
+    //     span.className = 'field-error-msg';
+    //     span.id = id + 'Err';
+    //     inp.parentNode.insertBefore(span, inp.nextSibling);
+    //   });
+    // })();
 
     /* Move success banner inside contact section */
     const contactSection = document.getElementById('contact');
@@ -132,77 +132,109 @@
       if (err) err.classList.remove('show');
     }
 
+    // function handleSubmit() {
+    //   const nameInp  = document.getElementById('nameInput');
+    //   const emailInp = document.getElementById('emailInput');
+    //   const phoneInp = document.getElementById('phoneInput');
+    //   const legacyMsg = document.getElementById('formMsg');
+    //   if (legacyMsg) legacyMsg.style.display = 'none';
+
+    //   const name  = nameInp  ? nameInp.value.trim()  : '';
+    //   const email = emailInp ? emailInp.value.trim() : '';
+    //   const phone = phoneInp ? phoneInp.value.trim() : '';
+
+    //   let valid = true;
+
+    //   /* Validate Name */
+    //   if (!name) {
+    //     showFieldError('nameInput', 'Please enter your name.');
+    //     valid = false;
+    //   } else { clearFieldError('nameInput'); }
+
+    //   /* Validate Email */
+    //   if (emailInp && emailInp.offsetParent !== null) {
+    //     const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    //     if (!email) {
+    //       showFieldError('emailInput', 'Please enter your email.');
+    //       valid = false;
+    //     } else if (!emailRx.test(email)) {
+    //       showFieldError('emailInput', 'Please enter a valid email address.');
+    //       valid = false;
+    //     } else { clearFieldError('emailInput'); }
+    //   }
+
+    //   /* Validate Phone */
+    //   const phoneRx = /^[+\d\s\-()]{7,15}$/;
+    //   if (!phone) {
+    //     showFieldError('phoneInput', 'Please enter your mobile number.');
+    //     valid = false;
+    //   } else if (!phoneRx.test(phone)) {
+    //     showFieldError('phoneInput', 'Please enter a valid phone number.');
+    //     valid = false;
+    //   } else { clearFieldError('phoneInput'); }
+
+    //   if (!valid) return;
+
+    //   /* ── Send to WhatsApp ──────────────────────────────────── */
+    //   const waText = encodeURIComponent(
+    //     `Hi Manoj! 👋\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nI'd like to discuss a project with you.`
+    //   );
+    //   window.open(`https://wa.me/918499949968?text=${waText}`, '_blank');
+
+    //   /* ── Send via Email (mailto) ───────────────────────────── */
+    //   const mailSubject = encodeURIComponent(`New Project Inquiry from ${name}`);
+    //   const mailBody    = encodeURIComponent(
+    //     `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nSent from portfolio contact form.`
+    //   );
+    //   setTimeout(() => {
+    //     window.location.href = `mailto:manojkuamrsomala@gmail.com?subject=${mailSubject}&body=${mailBody}`;
+    //   }, 600);
+
+    //   /* ── Show success banner ───────────────────────────────── */
+    //   const banner = document.getElementById('formSuccessBanner');
+    //   const msgEl  = document.getElementById('successMsg');
+    //   if (msgEl) msgEl.textContent = `Thanks ${name}! Your message is on its way. I'll get back to you soon 🚀`;
+    //   if (banner) banner.classList.add('show');
+
+    //   /* Clear form */
+    //   if (nameInp)  { nameInp.value  = ''; nameInp.classList.remove('success-field'); }
+    //   if (emailInp) { emailInp.value = ''; emailInp.classList.remove('success-field'); }
+    //   if (phoneInp) { phoneInp.value = ''; phoneInp.classList.remove('success-field'); }
+
+    //   setTimeout(() => { if (banner) banner.classList.remove('show'); }, 7000);
+    // }
+
     function handleSubmit() {
-      const nameInp  = document.getElementById('nameInput');
-      const emailInp = document.getElementById('emailInput');
-      const phoneInp = document.getElementById('phoneInput');
-      const legacyMsg = document.getElementById('formMsg');
-      if (legacyMsg) legacyMsg.style.display = 'none';
+  const nameInp  = document.getElementById('nameInput');
+  const phoneInp = document.getElementById('phoneInput');
+  const legacyMsg = document.getElementById('formMsg');
+  if (legacyMsg) legacyMsg.style.display = 'none';
 
-      const name  = nameInp  ? nameInp.value.trim()  : '';
-      const email = emailInp ? emailInp.value.trim() : '';
-      const phone = phoneInp ? phoneInp.value.trim() : '';
+  const name  = nameInp  ? nameInp.value.trim()  : '';
+  const phone = phoneInp ? phoneInp.value.trim() : '';
 
-      let valid = true;
+  let valid = true;
 
-      /* Validate Name */
-      if (!name) {
-        showFieldError('nameInput', 'Please enter your name.');
-        valid = false;
-      } else { clearFieldError('nameInput'); }
+  if (!name) {
+    showFieldError('nameInput', 'Please enter your name.');
+    valid = false;
+  } else { clearFieldError('nameInput'); }
 
-      /* Validate Email */
-      if (emailInp) {
-        const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!email) {
-          showFieldError('emailInput', 'Please enter your email.');
-          valid = false;
-        } else if (!emailRx.test(email)) {
-          showFieldError('emailInput', 'Please enter a valid email address.');
-          valid = false;
-        } else { clearFieldError('emailInput'); }
-      }
+  const phoneRx = /^[+\d\s\-()]{7,15}$/;
+  if (!phone) {
+    showFieldError('phoneInput', 'Please enter your mobile number.');
+    valid = false;
+  } else if (!phoneRx.test(phone)) {
+    showFieldError('phoneInput', 'Please enter a valid phone number.');
+    valid = false;
+  } else { clearFieldError('phoneInput'); }
 
-      /* Validate Phone */
-      const phoneRx = /^[+\d\s\-()]{7,15}$/;
-      if (!phone) {
-        showFieldError('phoneInput', 'Please enter your mobile number.');
-        valid = false;
-      } else if (!phoneRx.test(phone)) {
-        showFieldError('phoneInput', 'Please enter a valid phone number.');
-        valid = false;
-      } else { clearFieldError('phoneInput'); }
+  if (!valid) return;
 
-      if (!valid) return;
-
-      /* ── Send to WhatsApp ──────────────────────────────────── */
-      const waText = encodeURIComponent(
-        `Hi Manoj! 👋\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nI'd like to discuss a project with you.`
-      );
-      window.open(`https://wa.me/918499949968?text=${waText}`, '_blank');
-
-      /* ── Send via Email (mailto) ───────────────────────────── */
-      const mailSubject = encodeURIComponent(`New Project Inquiry from ${name}`);
-      const mailBody    = encodeURIComponent(
-        `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nSent from portfolio contact form.`
-      );
-      setTimeout(() => {
-        window.location.href = `mailto:manojkuamrsomala@gmail.com?subject=${mailSubject}&body=${mailBody}`;
-      }, 600);
-
-      /* ── Show success banner ───────────────────────────────── */
-      const banner = document.getElementById('formSuccessBanner');
-      const msgEl  = document.getElementById('successMsg');
-      if (msgEl) msgEl.textContent = `Thanks ${name}! Your message is on its way. I'll get back to you soon 🚀`;
-      if (banner) banner.classList.add('show');
-
-      /* Clear form */
-      if (nameInp)  { nameInp.value  = ''; nameInp.classList.remove('success-field'); }
-      if (emailInp) { emailInp.value = ''; emailInp.classList.remove('success-field'); }
-      if (phoneInp) { phoneInp.value = ''; phoneInp.classList.remove('success-field'); }
-
-      setTimeout(() => { if (banner) banner.classList.remove('show'); }, 7000);
-    }
+  // Updated WhatsApp Text (Removed Email)
+  const waText = encodeURIComponent(`Hi Manoj! 👋\nName: ${name}\nPhone: ${phone}\n\nI'd like to discuss a project.`);
+  window.open(`https://wa.me/918499949968?text=${waText}`, '_blank');
+}
 
     /* ── Live input validation feedback ─────────────────────── */
     ['nameInput','emailInput','phoneInput'].forEach(id => {
@@ -269,4 +301,6 @@
         }
       });
     })();
+
+
 
