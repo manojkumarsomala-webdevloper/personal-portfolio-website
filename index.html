@@ -9,213 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css"/>
 
-  <!-- ── NEW FEATURE STYLES (do not modify original styles.css) ── -->
-  <style>
-    /* ── Project image overlay on hover ──────────────────────── */
-    .project-img-placeholder {
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-    }
-    .project-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(60, 20, 220, 0.82);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      color: #fff;
-      font-weight: 700;
-      font-size: 1rem;
-      letter-spacing: .04em;
-      opacity: 0;
-      transition: opacity .32s cubic-bezier(.4,0,.2,1);
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
-      pointer-events: none;
-    }
-    .project-img-placeholder:hover .project-overlay {
-      opacity: 1;
-    }
-    .project-overlay svg {
-      width: 32px; height: 32px;
-      background: rgba(255,255,255,.2);
-      border-radius: 50%;
-      padding: 6px;
-      transition: transform .25s;
-    }
-    .project-img-placeholder:hover .project-overlay svg {
-      transform: scale(1.15);
-    }
-
-    /* ── Floating WhatsApp + Contact widget ───────────────────── */
-    .float-widget {
-      position: fixed;
-      bottom: 28px;
-      right: 24px;
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 12px;
-    }
-    .float-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .float-label {
-      background: rgba(10,6,30,.82);
-      color: #fff;
-      padding: 5px 14px;
-      border-radius: 100px;
-      font-size: .75rem;
-      font-weight: 600;
-      white-space: nowrap;
-      opacity: 0;
-      transform: translateX(14px);
-      transition: opacity .22s ease, transform .22s ease;
-      pointer-events: none;
-      font-family: var(--ff-body);
-    }
-    .float-item:hover .float-label {
-      opacity: 1;
-      transform: translateX(0);
-    }
-    .float-btn {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 6px 24px rgba(0,0,0,.22);
-      transition: transform .22s ease, box-shadow .22s ease;
-      cursor: pointer;
-      text-decoration: none;
-      position: relative;
-    }
-    .float-btn:hover {
-      transform: scale(1.12);
-      box-shadow: 0 10px 32px rgba(0,0,0,.3);
-    }
-    .float-btn svg { width: 26px; height: 26px; }
-    .float-wa  { background: #25D366; color: #fff; }
-    .float-call { background: hsl(256,100%,59%); color: #fff; }
-    /* pulse ring on WA button */
-    .float-wa::after {
-      content: '';
-      position: absolute;
-      inset: -4px;
-      border-radius: 50%;
-      border: 2px solid rgba(37,211,102,.5);
-      animation: wa-pulse 2.2s ease-out infinite;
-    }
-    @keyframes wa-pulse {
-      0%   { transform: scale(1); opacity: 1; }
-      70%  { transform: scale(1.4); opacity: 0; }
-      100% { opacity: 0; }
-    }
-
-    /* ── Enhanced scroll animations ───────────────────────────── */
-    .reveal-left {
-      opacity: 0;
-      transform: translateX(-48px);
-      transition: opacity .7s ease, transform .7s ease;
-    }
-    .reveal-right {
-      opacity: 0;
-      transform: translateX(48px);
-      transition: opacity .7s ease, transform .7s ease;
-    }
-    .reveal-scale {
-      opacity: 0;
-      transform: scale(.88);
-      transition: opacity .65s ease, transform .65s ease;
-    }
-    .reveal-left.visible,
-    .reveal-right.visible,
-    .reveal-scale.visible {
-      opacity: 1;
-      transform: none;
-    }
-    /* stagger delays for grid children */
-    .fade-up:nth-child(1) { transition-delay: .05s; }
-    .fade-up:nth-child(2) { transition-delay: .15s; }
-    .fade-up:nth-child(3) { transition-delay: .25s; }
-    .fade-up:nth-child(4) { transition-delay: .35s; }
-
-    /* ── Form validation states ───────────────────────────────── */
-    .form-input.error {
-      border-color: #e53e3e !important;
-      background: #fff5f5;
-      animation: shake .38s cubic-bezier(.36,.07,.19,.97) both;
-    }
-    .form-input.success-field {
-      border-color: #38a169 !important;
-      background: #f0fff4;
-    }
-    @keyframes shake {
-      10%,90%  { transform: translateX(-3px); }
-      20%,80%  { transform: translateX(4px); }
-      30%,50%,70% { transform: translateX(-5px); }
-      40%,60%  { transform: translateX(5px); }
-    }
-    .field-error-msg {
-      display: none;
-      font-size: .75rem;
-      color: #e53e3e;
-      margin-top: -8px;
-      margin-left: 22px;
-      font-family: var(--ff-body);
-    }
-    .field-error-msg.show { display: block; }
-
-    /* success banner */
-    #formSuccessBanner {
-      display: none;
-      max-width: 760px;
-      margin: 20px auto 0;
-      background: linear-gradient(135deg, #e6ffed, #c6f6d5);
-      border: 1.5px solid #38a169;
-      border-radius: 16px;
-      padding: 20px 28px;
-      text-align: center;
-      font-family: var(--ff-body);
-      animation: slideDown .4s ease;
-    }
-    #formSuccessBanner.show { display: block; }
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    #formSuccessBanner .success-icon {
-      font-size: 2rem; margin-bottom: 8px;
-    }
-    #formSuccessBanner h4 {
-      font-family: var(--ff-head);
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #276749;
-      margin-bottom: 4px;
-    }
-    #formSuccessBanner p {
-      font-size: .85rem;
-      color: #38a169;
-    }
-
-    /* ── Clickable contact links ──────────────────────────────── */
-    a.contact-link-tel,
-    a.contact-link-mail {
-      color: inherit;
-      text-decoration: none;
-      transition: color .2s;
-    }
-    a.contact-link-tel:hover { color: hsl(256,100%,59%); }
-    a.contact-link-mail:hover { color: hsl(256,100%,59%); }
-  </style>
 </head>
 <body>
 
@@ -223,14 +16,17 @@
   <nav id="navbar">
     <div class="container">
       <div class="nav-inner">
-        <a href="#hero" class="logo"><img src="icons/logo-d.png" alt="Manoj Kumar" width="100px" height="auto"  ></a>
+        <a href="#hero" class="logo"><img src="icons/logo-d.png" alt="Manoj Kumar" width="40px" height="auto"  ></a>
         <ul class="nav-links">
           <li><a href="#hero" class="nav-link">Home</a></li>
           <li><a href="#services" class="nav-link active">Work</a></li>
           <li><a href="#projects" class="nav-link">Projects</a></li>
           <li><a href="#about" class="nav-link">Contact</a></li>
         </ul>
-        <a href="#contact" class="btn btn-outline" style="padding:10px 22px;font-size:.88rem;">Let's Talk</a>
+        <a href="tel:+918499949968" class="btn btn-outline" style="padding:10px 22px;font-size:.88rem;display:inline-flex;align-items:center;gap:8px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0;transition:stroke .2s;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.4h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Let's Talk
+        </a>
         <button class="hamburger" id="hamburger" aria-label="Menu">
           <span></span><span></span><span></span>
         </button>
@@ -261,9 +57,9 @@
             websites that turn visitors into customers.
           </p>
           <div class="hero-ctas">
-            <a href="#contact" class="btn btn-primary hero-btn">
-              Start Your Project
-              <img src="icons/right-arrow.png" width="18" height="18" alt="" srcset="">
+            <a href="https://wa.me/918499949968?text=Hi%20Manoj!%20I%20visited%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener" class="btn btn-primary hero-btn">
+                <img class="whatsapp-hero-icon"  width="25" height="25" src="./icons8-whatsapp-96.png" alt="" srcset="">
+              Chat on WhatsApp
             </a>
             <a href="#projects"  class="btn btn-outline btn-projets">
               View My Work
@@ -465,9 +261,9 @@
       <div class="projects-grid" style="margin-top:56px;">
         <!-- Project 1 -->
         <div class="project-card fade-up">
-          <div class="project-img-placeholder">
+          <a href="https://manojkumarsomala.github.io/Nexoraschool--landing--page/" class="project-img-placeholder">
             <img class="project-img" src="images/screencapture-Nexoraschool-landing-page.png" alt="" srcset="">
-          </div>
+          </a>
           <div class="project-body">
             <div class="project-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -478,7 +274,7 @@
               <span class="tag">Figma</span>
               <span class="tag">Html.Css</span>
               <span class="tag">GitHub</span>
-              <a href="#" class="project-link">
+              <a href="https://manojkumarsomala.github.io/Nexoraschool--landing--page/" class="project-link">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               </a>
             </div>
@@ -486,9 +282,9 @@
         </div>
         <!-- Project 2 -->
         <div class="project-card fade-up">
-          <div class="project-img-placeholder" style="background:linear-gradient(135deg,#43B89C,#1A7A5E);">
+          <a href="https://manojkumarsomala.github.io/NeuroNova--Landing--page/#location" class="project-img-placeholder" style="background:linear-gradient(135deg,#43B89C,#1A7A5E);">
           <img class="project-img" src="images/NeuroNova--Landing--page_.png" alt="" srcset="">
-          </div>
+          </a>
           <div class="project-body">
             <div class="project-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
@@ -499,7 +295,7 @@
               <span class="tag">Figma</span>
               <span class="tag">Html.Css</span>
               <span class="tag">GitHub</span>
-              <a href="#" class="project-link">
+              <a href="https://manojkumarsomala.github.io/NeuroNova--Landing--page/#location" class="project-link">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               </a>
             </div>
@@ -507,10 +303,10 @@
         </div>
         <!-- Project 3 -->
         <div class="project-card fade-up">
-          <div class="project-img-placeholder" style="background:linear-gradient(135deg,#FF9A3C,#C95B0C);">
+          <a href="https://manojkumarsomala-webdevloper.github.io/savvora--landing-page-restaurant/" class="project-img-placeholder" style="background:linear-gradient(135deg,#43B89C,#1A7A5E);">
                       <img class="project-img" src="images/savvora-landing page-screencapture..png" alt="" srcset="">
 
-          </div>
+          </a>
           <div class="project-body">
             <div class="project-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
@@ -521,7 +317,7 @@
               <span class="tag">Figma</span>
               <span class="tag">Html.Css</span>
               <span class="tag">GitHub</span>
-              <a href="#" class="project-link">
+              <a href="#https://manojkumarsomala-webdevloper.github.io/savvora--landing-page-restaurant/" class="project-link">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               </a>
             </div>
@@ -529,9 +325,9 @@
         </div>
       </div>
       <div class="view-all-wrap" style="text-align:center;">
-        <a href="#" class="btn btn-outline">
+        <a href="" class="btn btn-outline">
           View All Projects
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
     </div>
@@ -584,11 +380,11 @@
           </div>
        
         <div class="about-ctas">  
-          <a href="#contact" class="btn btn-primary hero-btn" style="justify-content:center;">
+          <a href="tel:+918499949968" class="btn btn-primary hero-btn" style="justify-content:center;">
             Let's Work Together
               <img src="icons/right-arrow.png" width="18" height="18" alt="" srcset="">
           </a>
-           <a href="#contact" class="btn btn-primary hero-btn" style="justify-content:center;">
+           <a href="https://wa.me/918499949968?text=Hi%20Manoj!%20I%20would%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener" class="btn btn-primary hero-btn" style="justify-content:center;">
               Chat on Whatsapp
               <img src="icons/right-arrow.png" width="18" height="18" alt="" srcset="">
             </a>
@@ -610,14 +406,23 @@
       <p class="section-sub" style="margin:0 auto 48px;">
         Have a project in mind? Let's discuss your idea and turn it into vision.
       </p>
-      <div class="contact-form" id="contactForm">
+      <!-- <div class="contact-form" id="contactForm">
         <input class="form-input" type="text" id="nameInput" placeholder="Your Name" required/>
         <input class="form-input" type="tel"  id="phoneInput" placeholder="Mobile Number" required/>
         <button class="btn btn-primary" onclick="handleSubmit()" style="border-radius:100px;padding:16px 32px;">
           Send Message
               <img src="icons/right-arrow.png" width="18" height="18" alt="" srcset="">
         </button>
-      </div>
+      </div> -->
+
+      <div class="contact-form" id="contactForm">
+  <input class="form-input" type="text" id="nameInput" placeholder="Your Name" required/>
+  <input class="form-input" type="tel"  id="phoneInput" placeholder="Mobile Number" required/>
+  <button class="btn btn-primary" onclick="handleSubmit()" style="border-radius:100px;padding:16px 32px;">
+    Send Message
+    <img src="icons/right-arrow.png" width="18" height="18" alt="">
+  </button>
+</div>
       <p id="formMsg" style="text-align:center;margin-top:20px;font-size:.9rem;color:var(--purple);display:none;"></p>
     </div>
   </section>
@@ -633,14 +438,14 @@
             online and achieve the results.
           </p>
           <div class="footer-socials">
-            <a href="#" class="social-btn" aria-label="Instagram">
+            <a href="https://wa.me/918499949968" target="_blank" rel="noopener" class="social-btn" aria-label="WhatsApp">
+                <div class="whatsapp-icon"><img width="20" height="20" src="./icons8-whatsapp-96.png" alt="" srcset=""></div>
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
             </a>
-            <a href="#" class="social-btn" aria-label="Twitter/X">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </a>
-            <a href="#" class="social-btn" aria-label="WhatsApp">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM11.99 2.048C6.477 2.048 2.001 6.507 2.001 12c0 1.761.469 3.415 1.29 4.854L2 22l5.278-1.385A9.912 9.912 0 0 0 12 21.952c5.514 0 9.99-4.459 9.99-9.952S17.504 2.048 11.99 2.048z"/></svg>
+            <a href="https://github.com" target="_blank" rel="noopener" class="social-btn" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.015 2.896-.015 3.286 0 .319.216.694.825.576C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
             </a>
           </div>
         </div>
@@ -695,18 +500,20 @@
       <a class="float-btn float-wa"
          href="https://wa.me/918499949968?text=Hi%20Manoj!%20I%20visited%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project."
          target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-        <svg viewBox="0 0 24 24" fill="currentColor">
+        <!-- <svg viewBox="0 0 24 24" fill="currentColor">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM11.99 2.048C6.477 2.048 2.001 6.507 2.001 12c0 1.761.469 3.415 1.29 4.854L2 22l5.278-1.385A9.912 9.912 0 0 0 12 21.952c5.514 0 9.99-4.459 9.99-9.952S17.504 2.048 11.99 2.048z"/>
-        </svg>
+        </svg> -->
+                <div class="whatsapp-icon"><img width="40" height="40" src="./icons8-whatsapp-96.png" alt="" srcset=""></div>
+
       </a>
     </div>
     <div class="float-item">
-      <span class="float-label">Get In Touch</span>
-      <a class="float-btn float-call" href="#contact" aria-label="Contact Me">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-          <polyline points="22,6 12,13 2,6"/>
+      <span class="float-label">Call Me</span>
+      <a class="float-btn float-call" href="tel:+918499949968" aria-label="Call Me">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="26" height="26">
+          <path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.58a1 1 0 0 1-.25 1.01l-2.2 2.2z"/>
         </svg>
+
       </a>
     </div>
   </div>
@@ -722,4 +529,3 @@
    <script src="script-2.js"></script>
 </body>
 </html>
-
